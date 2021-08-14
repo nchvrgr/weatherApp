@@ -12,8 +12,8 @@ export default function Ciudad(ciudad) {
     const apiKey = '4ae2636d8dfbdc3044bede63951a019b';
     
 
-    useEffect(
-        async () => {
+    useEffect( () => {
+        async function fetchCity(){
             try{
                 const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?id=${ciudad.city}&appid=${apiKey}&units=metric`);
                 if(data){
@@ -47,8 +47,9 @@ export default function Ciudad(ciudad) {
             catch (err){
                 console.log("Error time api", err)
             }
-        }, [city.latitud, city.longitud, setCity, hora, ciudad.city]
-    );
+        }
+        fetchCity();
+    }, [city.latitud, city.longitud, setCity, hora, ciudad.city]);
 
     
     return (
