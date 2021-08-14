@@ -1,0 +1,38 @@
+.footerText{
+    color: white;
+    padding-right: 10%;
+    padding-left: 10%;
+}
+
+.github{
+    width: 10px;
+    height: 10px;
+    margin-right: 1em;
+    background-color: green;
+    padding-right: 10em;
+}
+
+.social{
+    display: flex;
+    justify-content: space-around;
+}
+
+.socialEl{
+    background-color: red;
+}
+
+.gitTag{
+    padding-left: 2.5em;
+    color: white;
+    text-decoration: none;
+}
+
+.linkTag{
+    text-decoration: none;
+    color: white;
+    padding-right: 1.5em;
+}
+
+
+
+

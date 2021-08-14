@@ -1,25 +1,105 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Nav from "./components/Nav.jsx";
+import Cards from "./components/Cards.jsx";
+import { Route } from "react-router-dom";
+import About from "./components/About.jsx";
+import Home from "./components/Home.jsx";
+import Ciudad from "./components/Ciudad.jsx";
 
-function App() {
+var apiKey = "4ae2636d8dfbdc3044bede63951a019b";
+
+export default function App() {
+  
+  const [cities, setCities] = useState([]);
+  var [already, setAlready] = useState([]);
+
+  function onClose(id) {
+    setCities((oldCities) => oldCities.filter((c) => c.id !== id));
+  }
+
+  function clearAll() {
+    setAlready([]);
+    setCities([]);
+  }
+
+  var functionAlready = function () {
+    setAlready([]);
+    setAlready([`⚠ Esta ciudad ya fue agregada`]);
+  };
+
+  var functionNotFound = function () {
+    setAlready([]);
+    setAlready(["⚠ Ciudad no encontrada"]);
+  };
+
+  function onSearch(ciudad) {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}&units=metric`
+    )
+
+    // `https://api.openweathermap.org/data/2.5/weather?q=cordoba&appid=4ae2636d8dfbdc3044bede63951a019b&units=metric`
+
+      .then((r) => r.json())
+      .then((recurso) => {
+        console.log(recurso);
+        if (recurso.main !== undefined) {
+          const ciudad = {
+            min: Math.round(recurso.main.temp_min),
+            max: Math.round(recurso.main.temp_max),
+            img: recurso.weather[0].icon,
+            id: recurso.id,
+            wind: recurso.wind.speed,
+            temp: Math.round(recurso.main.temp),
+            name: recurso.name,
+            weather: recurso.weather[0].main,
+            clouds: recurso.clouds.all,
+            latitud: recurso.coord.lat,
+            longitud: recurso.coord.lon,
+            country: recurso.sys.country
+          };
+          const cityExists = cities.filter((city) => city.id === ciudad.id);
+          if (cityExists.length > 0) {
+            functionAlready();
+          } else {
+            setCities((oldCities) => [...oldCities, ciudad]);
+            setAlready([]);
+          }
+        } else {
+          functionNotFound();
+        }
+      });
+  }
+  // function onFilter(ciudadId) {
+  //   let ciudad = cities.filter((c) => c.id === parseInt(ciudadId));
+  //   if (ciudad.length > 0) {
+  //     return ciudad[0];
+  //   } else {
+  //     return null;
+  //   }
+  // }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App">         
+      <Route
+        path="/"
+        render={() => (
+          <Nav onSearch={onSearch} clearAll={clearAll} already={already} />
+        )}
+      />
+      <Route exact path="/about" component={About} />
+      <Route exact path="/" component={Home} />
+      <Route
+        exact
+        path="/ciudad/:ciudadId"
+        render={({ match }) => (
+          <Ciudad city={match.params.ciudadId} />
+        )}
+      />
+      <Route
+        path="/cards"
+        render={() => <Cards cities={cities} onClose={onClose} onSearch={onSearch} clearAll={clearAll} already={already} />}
+      />
+      <br />
     </div>
   );
 }
-
-export default App;
