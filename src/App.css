@@ -3,6 +3,12 @@
 .App {
   text-align: center;
   font-family: 'Hind Siliguri', sans-serif;
+  text-decoration: none !important;
+  text-decoration-color: red;
+}
+
+a{
+  text-decoration: none;
 }
 
 .navv{

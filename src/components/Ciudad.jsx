@@ -72,15 +72,17 @@ export default function Ciudad(ciudad) {
                         <div className={style.stats}>
                             <p>Total clouds: <b>{city.clouds}</b></p>
                             <p className={style.stat}>Wind: <b>{Math.floor(city.wind)} km/h</b></p>
-                            <p>Gusts: <b>{city.windgusts} km/h</b></p>
+                            <p>Gusts: <b>{parseInt(city.windgusts) > 0 ? city.windgusts : "0.1"} km/h</b></p>
 
                         </div>
                         <Video img={city.img}/>
                     </div>
-            <br/>
-            <Link to="/cards" className={style.Link}>
-                <span>Volver</span>
-            </Link>
+            <div className={style.buttonDiv}>
+                <Link to="/cards" className={style.linkto}>
+                    <p className={style.Link}>Volver</p>
+                </Link>
+            </div>
+
         </div>
     )
 }
