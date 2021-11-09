@@ -56,7 +56,7 @@ export default function Ciudad(ciudad) {
         <div className={style.cityScreen}>
                     <div className={style.titleDiv}>
                         <h1 className={style.title}>{city.name}</h1>
-                        <img alt={city.flag} src={`https://www.countryflags.io/${city.flag}/shiny/64.png`}/>
+                        {/* <img alt={city.flag} src={`https://www.countryflags.io/${city.flag}/shiny/64.png`}/> */}
                     <p className={style.time}>{hora}</p>
                     <p className={style.detail}>{city.desc?.charAt(0).toUpperCase()+city.desc?.slice(1)}</p>
                         <div className={style.stats}>

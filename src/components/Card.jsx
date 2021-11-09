@@ -6,12 +6,19 @@ export default function Card ({min, max, name, img, onClose, id, temp, weather, 
     return (
       <div className={ img.includes("d") ? style.card : style.card2} key={id}>
         <div className={style.buttonDiv}>
-        {
+        {/* {
           img.includes("d") 
           ? 
           <>☀️<img src={`https://www.countryflags.io/${country}/shiny/24.png`} alt={country}/></>
           : 
           <>🌙<img src={`https://www.countryflags.io/${country}/shiny/24.png`} alt={country}/></>
+        } */}
+        {
+          img.includes("d") 
+          ? 
+          <>☀️</>
+          : 
+          <>🌙</>
         }
         <button onClick={onClose} className={style.boton}>X</button>
         </div>
